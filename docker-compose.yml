@@ -1,0 +1,32 @@
+#docker-compose up -d
+version: '3'
+services:
+  proxy:
+    image: traefik
+    command: --api.insecure=true --providers.docker
+    ports:
+      - "8080:8080"
+      - "8081:80"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+  app-cliente-service:
+    image: eric2945/app-cliente
+    deploy:
+      replicas: 1
+    expose:
+      - 8080
+
+  app-producto-service:
+    image: eric2945/app-producto
+    deploy:
+      replicas: 1
+    expose:
+      - 8080
+
+  app-orden-compra-service:
+    image: eric2945/app-orden-compra
+    deploy:
+      replicas: 1
+    expose:
+      - 8080
+
